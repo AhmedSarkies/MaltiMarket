@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import "../../styles/clock.css";
 
@@ -7,30 +7,36 @@ const Clock = () => {
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
-  let interval;
-  const countDown = () => {
-    const destination = new Date("Feb 7, 2024").getTime();
-    interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = destination - now;
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      if (destination < 0) clearInterval(interval.current);
-      else {
-        setDays(days);
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
-      }
-    }, 1000);
-  };
-  useEffect(() => {
+
+  const call = useCallback(() => {
+    const countDown = () => {
+      const destination = new Date("Feb 8, 2024").getTime();
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const difference = destination - now;
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        if (destination < 0) clearInterval(interval.current);
+        else {
+          setDays(days);
+          setHours(hours);
+          setMinutes(minutes);
+          setSeconds(seconds);
+        }
+      }, 1000);
+    };
     countDown();
   }, []);
+
+  useEffect(() => {
+    call();
+  }, [call]);
 
   return (
     <div className="clock-wrapper d-flex align-items-center gap-3">
