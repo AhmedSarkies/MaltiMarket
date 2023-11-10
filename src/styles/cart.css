@@ -1,0 +1,18 @@
+.table tr td {
+  vertical-align: middle !important;
+}
+.table tr td .add-product-group {
+  margin-top: 0;
+}
+.table tr td img {
+  width: 75px !important;
+  height: 75px !important;
+  object-fit: contain;
+}
+.table tr td i {
+  cursor: pointer;
+}
+.table tr td,
+.table tr th {
+  color: var(--primary-color);
+}

@@ -34,3 +34,12 @@
   font-size: 1.2rem;
   color: var(--primary-color);
 }
+@media only screen and (max-width: 768px) {
+  .shop-products-container {
+    padding-bottom: 0;
+  }
+  .filter-widget select {
+    padding: 7px 10px;
+    font-size: 0.75rem;
+  }
+}

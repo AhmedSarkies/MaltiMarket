@@ -42,10 +42,12 @@ const products = [
     reviews: [
       {
         rating: 4.7,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.5,
+    stock: 16,
   },
 
   {
@@ -65,10 +67,12 @@ const products = [
       },
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 96,
   },
 
   {
@@ -84,14 +88,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 256,
   },
   {
     id: "26",
@@ -106,14 +113,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 600,
   },
   {
     id: "04",
@@ -128,14 +138,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 124,
   },
 
   {
@@ -151,14 +164,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 41,
   },
 
   {
@@ -174,14 +190,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 27,
   },
   {
     id: "07",
@@ -196,14 +215,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 17,
   },
 
   {
@@ -219,14 +241,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 13,
   },
 
   {
@@ -242,14 +267,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 64,
   },
 
   {
@@ -265,14 +293,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 21,
   },
 
   {
@@ -288,14 +319,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 47,
   },
   {
     id: "25",
@@ -310,14 +344,17 @@ const products = [
     reviews: [
       {
         rating: 4.6,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.7,
+    stock: 34,
   },
   {
     id: "11",
@@ -332,14 +369,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 60,
   },
 
   {
@@ -355,14 +395,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 15,
   },
 
   {
@@ -378,14 +421,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 6,
   },
 
   {
@@ -401,14 +447,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 45,
   },
 
   {
@@ -424,14 +473,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 20,
   },
 
   {
@@ -447,14 +499,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 30,
   },
 
   {
@@ -470,14 +525,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 50,
   },
 
   {
@@ -493,14 +551,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 300,
   },
 
   {
@@ -516,14 +577,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 120,
   },
 
   {
@@ -539,14 +603,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 75,
   },
 
   {
@@ -562,14 +629,17 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
         rating: 4.9,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
     ],
     avgRating: 4.8,
+    stock: 100,
   },
 ];
 

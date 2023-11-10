@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
@@ -29,6 +29,7 @@ const navLinks = [
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const stickyHeaderFunc = () => {
@@ -86,7 +87,7 @@ const Header = () => {
                 <i className="ri-heart-line"></i>
                 <span className="badge">0</span>
               </span>
-              <span className="cart-icon">
+              <span className="cart-icon" onClick={() => navigate("/cart")}>
                 <i className="ri-shopping-bag-line"></i>
                 <span className="badge">{totalQuantity}</span>
               </span>

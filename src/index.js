@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "remixicon/fonts/remixicon.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

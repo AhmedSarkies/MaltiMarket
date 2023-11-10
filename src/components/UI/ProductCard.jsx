@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 import { motion } from "framer-motion";
 import { Col } from "reactstrap";
@@ -16,11 +16,12 @@ const ProductCard = ({ product }) => {
 
   const addToCartHandler = () => {
     dispatch(
-      addItem({
-        id: product.id,
-        productName: product.productName,
-        image: product.imgUrl,
-        price: product.price,
+      addToCart({
+        id,
+        productName,
+        imgUrl,
+        price,
+        quantity: 1,
       })
     );
     toast.success("Product Added Successfully");

@@ -47,7 +47,7 @@
 .fav-icon {
   position: relative;
 }
-.badge {
+.nav-icons .badge {
   content: "";
   position: absolute;
   top: 25%;
@@ -125,7 +125,8 @@
   .logo h1 {
     font-size: 1rem;
   }
-  .fav-icon i, .cart-icon i {
+  .fav-icon i,
+  .cart-icon i {
     font-size: 1.2rem !important;
   }
   .nav-icons span img {
