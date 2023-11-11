@@ -63,6 +63,7 @@ const products = [
     reviews: [
       {
         rating: 4.8,
+        username: "John Doe",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       },
       {
@@ -72,7 +73,7 @@ const products = [
       },
     ],
     avgRating: 4.7,
-    stock: 96,
+    stock: 15,
   },
 
   {

@@ -30,7 +30,7 @@ const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const { totalQuantity } = useSelector((state) => state.cart);
 
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -52,7 +52,9 @@ const Header = () => {
     };
   }, []);
 
-  const menuToggle = () => menuRef.current.classList.toggle("active-menu");
+  const menuToggle = () => {
+    menuRef.current.classList.toggle("active-menu");
+  };
 
   return (
     <header className="header" ref={headerRef}>

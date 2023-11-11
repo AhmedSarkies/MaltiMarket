@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,6 +21,7 @@ import products from "../assets/data/products";
 const Cart = () => {
   const { cart, totalAmount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Helmet title={"Cart"}>
@@ -107,12 +108,20 @@ const Cart = () => {
                 taxes and shipping will calculate in checkout
               </p>
               <div>
-                <button className="shop-btn w-100">
-                  <Link to={"/checkout"}>Checkout</Link>
-                </button>
-                <button className="shop-btn w-100 mt-3">
-                  <Link to={"/shop"}>Continue Shopping</Link>
-                </button>
+                <motion.button
+                  whileTap={{ scale: 1.08 }}
+                  className="shop-btn w-100"
+                  onClick={() => navigate("/checkout")}
+                >
+                  Checkout
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 1.08 }}
+                  className="shop-btn w-100 mt-3"
+                  onClick={() => navigate("/shop")}
+                >
+                  Continue Shopping
+                </motion.button>
               </div>
             </Col>
           </Row>
