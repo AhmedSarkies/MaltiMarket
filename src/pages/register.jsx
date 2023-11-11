@@ -7,7 +7,7 @@ import { Container, Row, Col, Form, FormGroup, Spinner } from "reactstrap";
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase.config";
 
 import { Helmet } from "../components";

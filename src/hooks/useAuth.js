@@ -1,7 +1,6 @@
-import React from 'react'
-import { onAuthStateChanged } from 'firebase/auth'
+// import React from 'react'
+// import { onAuthStateChanged } from 'firebase/auth'
 
+// const useAuth = () => {}
 
-const useAuth = () => {}
-
-export default useAuth
+// export default useAuth

@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, Fragment } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
-
 import { Col, Container, Row } from "reactstrap";
+import { toast } from "react-toastify";
 
 import { CommonSection, Helmet, ProductsList } from "../components";
 
@@ -13,7 +13,6 @@ import products from "../assets/data/products";
 import { addToCart } from "../redux/slices/cartSlice";
 
 import "../styles/product-details.css";
-import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
