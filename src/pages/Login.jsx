@@ -35,6 +35,7 @@ const Login = () => {
       navigate("/checkout");
     } catch (error) {
       setLoading(false);
+      setPassword("");
       toast.error(error.message);
     }
   };
