@@ -203,3 +203,8 @@
     line-height: 60px;
   }
 }
+@media only screen and (max-width: 576px) {
+  .nav-icons {
+    column-gap: 0.9rem;
+  }
+}
