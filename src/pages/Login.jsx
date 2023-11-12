@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
@@ -39,6 +39,10 @@ const Login = () => {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [loading]);
 
   return (
     <Helmet title={"Login"}>
