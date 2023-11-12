@@ -78,10 +78,11 @@ const Login = () => {
                   >
                     Login
                   </motion.button>
-                  <br />
-                  <Link to="/register" onClick={reset} className="d-block mt-2">
-                    Don't you have an account?
-                  </Link>
+                  <div className="mt-2">
+                    <Link to="/register" onClick={reset}>
+                      Don't you have an account?
+                    </Link>
+                  </div>
                 </Form>
               </Col>
             )}
