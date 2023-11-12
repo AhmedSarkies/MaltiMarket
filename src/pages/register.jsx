@@ -199,9 +199,11 @@ const Register = () => {
                   >
                     Register
                   </motion.button>
-                  <Link to="/login" onClick={reset} className="d-block mt-2">
-                    Do you have an account?
-                  </Link>
+                  <div className="mt-2">
+                    <Link to="/login" onClick={reset}>
+                      Do you have an account?
+                    </Link>
+                  </div>
                 </Form>
               </Col>
             )}
