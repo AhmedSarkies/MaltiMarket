@@ -136,7 +136,7 @@
     align-items: center;
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 200px;
     cursor: pointer;
     z-index: 999999;
   }
