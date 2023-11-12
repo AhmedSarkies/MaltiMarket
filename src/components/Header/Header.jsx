@@ -69,6 +69,7 @@ const Header = () => {
               </div>
             </div>
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
+              <span className="close-menu-btn">+</span>
               <ul className="menu">
                 {navLinks.map(({ path, display }, idx) => (
                   <li className="nav-item" key={idx}>
