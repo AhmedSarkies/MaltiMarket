@@ -65,7 +65,7 @@ const Header = () => {
               <img src={logo} alt="logo" />
               <div>
                 <h1>MaltiMarket</h1>
-                {/* <p>Since 1990</p> */}
+                <p>Since 1990</p>
               </div>
             </div>
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
