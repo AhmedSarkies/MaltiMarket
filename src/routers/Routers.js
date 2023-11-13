@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -9,6 +10,8 @@ import {
   Cart,
   Checkout,
 } from "../pages";
+import ProtectedRoute from "./ProtectedRoute";
+import { AddProduct, AllProducts, Dashboard } from "../admin";
 
 const Routers = () => {
   return (
@@ -19,7 +22,12 @@ const Routers = () => {
       <Route path="/shop" element={<Shop />} />
       <Route path="/shop/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/" element={<ProtectedRoute />}>
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/all-products" element={<AllProducts />} />
+        <Route path="/dashboard/add-product" element={<AddProduct />} />
+      </Route>
     </Routes>
   );
 };
