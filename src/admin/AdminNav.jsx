@@ -14,6 +14,11 @@ const adminMenu = [
     path: "/dashboard",
   },
   {
+    display: "Add Product",
+    icon: "ri-add-circle-line",
+    path: "/dashboard/add-product",
+  },
+  {
     display: "All Products",
     icon: "ri-shopping-bag-line",
     path: "/dashboard/all-products",
