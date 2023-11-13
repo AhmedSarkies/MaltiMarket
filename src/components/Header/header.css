@@ -88,10 +88,72 @@
   cursor: pointer;
   z-index: 1;
 }
-.nav-icons span img {
+.nav-icons .profile img {
   width: 30px;
   height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
   cursor: pointer;
+}
+.nav-icons .profile {
+  position: relative;
+  z-index: 99;
+}
+.nav-icons .profile .profile-actions {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 150px;
+  background-color: var(--card-bg-01);
+  color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: none;
+  opacity: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+  z-index: 999;
+  transition: all 0.25s ease-in-out;
+}
+.nav-icons .profile .profile-actions.active {
+  display: flex;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+.nav-icons .profile .profile-actions .logout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 2rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+.nav-icons .profile .profile-actions .logout:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+.nav-icons .profile .profile-actions .action {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 2rem;
+}
+.nav-icons .profile .profile-actions .action a {
+  width: 100%;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+.nav-icons .profile .profile-actions .action a:hover {
+  background: var(--primary-color);
+  color: #fff;
 }
 .mobile-menu {
   font-size: 1.3rem;
@@ -193,7 +255,7 @@
   .cart-icon i {
     font-size: 1.2rem !important;
   }
-  .nav-icons span img {
+  .nav-icons .profile img {
     width: 1.4rem;
     height: 1.4rem;
   }

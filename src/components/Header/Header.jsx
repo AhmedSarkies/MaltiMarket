@@ -1,15 +1,20 @@
 import React, { useRef, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
 
 import { Container, Row } from "reactstrap";
 
+import useAuth from "../../hooks/useAuth";
+
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 
 import "./header.css";
+import { auth } from "../../firebase.config";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const navLinks = [
   {
@@ -31,6 +36,8 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { totalQuantity } = useSelector((state) => state.cart);
+  const { currentUser } = useAuth();
+  const activeActionsRef = useRef(null);
 
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -45,16 +52,23 @@ const Header = () => {
     });
   };
 
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged out successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   useEffect(() => {
     stickyHeaderFunc();
     return () => {
       window.removeEventListener("scroll", stickyHeaderFunc);
     };
   }, []);
-
-  const menuToggle = () => {
-    menuRef.current.classList.toggle("active-menu");
-  };
 
   return (
     <header className="header" ref={headerRef}>
@@ -68,15 +82,19 @@ const Header = () => {
                 <p>Since 1990</p>
               </div>
             </div>
-            <div className="navigation" ref={menuRef} onClick={menuToggle}>
+            <div
+              className="navigation"
+              ref={menuRef}
+              onClick={() => menuRef.current.classList.toggle("active-menu")}
+            >
               <span className="close-menu-btn">+</span>
               <ul className="menu">
                 {navLinks.map(({ path, display }, idx) => (
                   <li className="nav-item" key={idx}>
                     <NavLink
                       to={path}
-                      className={(navClass) =>
-                        navClass.isActive ? "nav-active" : ""
+                      className={({isActive}) =>
+                        isActive ? "nav-active" : ""
                       }
                     >
                       {display}
@@ -94,15 +112,44 @@ const Header = () => {
                 <i className="ri-shopping-bag-line"></i>
                 <span className="badge">{totalQuantity}</span>
               </span>
-              <span>
+              <div className="profile">
                 <motion.img
                   whileTap={{ scale: 1.2 }}
-                  src={userIcon}
-                  alt="user"
+                  src={currentUser?.photoURL ? currentUser.photoURL : userIcon}
+                  alt={
+                    currentUser?.displayName ? currentUser.displayName : "user"
+                  }
+                  onClick={() =>
+                    activeActionsRef.current.classList.toggle("active")
+                  }
                 />
-              </span>
+                <div
+                  className="profile-actions"
+                  ref={activeActionsRef}
+                  onClick={() =>
+                    activeActionsRef.current.classList.toggle("active")
+                  }
+                >
+                  {currentUser?.photoURL ? (
+                    <span className="logout" onClick={logout}>
+                      Logout
+                    </span>
+                  ) : (
+                    <div className="action d-flex justify-content-center align-items-center flex-column">
+                      <Link to="/login">Login</Link>
+                      <Link to="/register">Register</Link>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="mobile-menu">
-                <span className="mobile-menu" onClick={menuToggle}>
+                <span
+                  className="mobile-menu"
+                  onClick={() =>
+                    menuRef.current.classList.toggle("active-menu")
+                  }
+                >
                   <i className="ri-menu-line"></i>
                 </span>
               </div>
