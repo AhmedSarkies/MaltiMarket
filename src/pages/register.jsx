@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
@@ -67,49 +67,48 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { user } = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+      const user = userCredential.user;
       const storageRef = ref(
         storage,
-        `images/${Date.now() + username}.${type}`
+        user.uid && `images/${user.uid}/profile/${username}_${user.uid}.${type}`
       );
       const uploadTask = uploadBytesResumable(storageRef, image);
-      uploadTask.on(
-        (error) => {
-          toast.error(error.message);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            // Update user profile
-            await updateProfile(user, {
-              displayName: username,
-              photoURL: downloadURL,
-            });
-            // Add User To Firebase Database
-            const usersCol = collection(db, "users");
-            const userDoc = {
-              uid: user.uid,
-              displayName: username,
-              email,
-              photoURL: downloadURL,
-            };
-            const myDocRef = doc(usersCol, user.uid);
-            await setDoc(myDocRef, userDoc);
+      uploadTask.then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          await updateProfile(user, {
+            displayName: username,
+            photoURL: downloadURL,
           });
-        }
-      );
-      setLoading(false);
-      toast.success("Account Created Successfully");
-      reset();
-      navigate("/login");
+          // Add User To Firebase Database
+          const usersCol = collection(db, "users");
+          const userDoc = {
+            uid: user.uid,
+            displayName: username,
+            email,
+            photoURL: downloadURL,
+          };
+          const myDocRef = doc(usersCol, user.uid);
+          await setDoc(myDocRef, userDoc);
+        });
+        setLoading(false);
+        toast.success("Account Created Successfully");
+        reset();
+        navigate("/login");
+      });
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [loading]);
 
   return (
     <Helmet title={"Register"}>
@@ -175,7 +174,7 @@ const Register = () => {
                       </label>
                     )}
                     {imagePreview && (
-                      <div className="border border-1 border-light d-flex justify-content-center align-items-center gap-4">
+                      <div className="border border-1 border-light d-flex justify-content-center align-items-center gap-4 p-3">
                         <motion.img
                           whileHover={{ scale: 1.1 }}
                           src={imagePreview}
