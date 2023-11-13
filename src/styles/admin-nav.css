@@ -1,0 +1,68 @@
+.admin-header {
+  width: 100%;
+  background: var(--primary-color);
+  padding: 20px 0;
+}
+.admin-nav-top {
+  width: 100%;
+}
+.admin-nav-wrapper-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 3rem;
+}
+.admin-nav-wrapper-top .logo {
+  font-size: 1.2rem;
+  color: whitesmoke;
+  cursor: pointer;
+}
+.admin-nav-wrapper-top .search-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-nav-top-right {
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+}
+.admin-nav-top-right img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.admin-nav-top-right span i {
+  color: whitesmoke;
+}
+.admin-menu {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-bg-02);
+}
+.admin-menu .admin-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin-menu .admin-navigation .admin-menu-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 2.7rem;
+  margin-bottom: 0;
+}
+.admin-menu .admin-navigation .admin-menu-list .admin-menu-item .item {
+  display: flex;
+  gap: 0.25rem;
+}
+.admin-menu .admin-navigation .admin-menu-list .admin-menu-item .active {
+  font-weight: 600;
+  background: whitesmoke;
+  padding: 7px 10px;
+  border-radius: 5px;
+}
