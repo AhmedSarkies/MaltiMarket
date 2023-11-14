@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { Container, Row, Col, Form, FormGroup, Spinner } from "reactstrap";
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase.config";
@@ -63,6 +67,19 @@ const Register = () => {
     setImagePreview(null);
   };
 
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        setLoading(false);
+        toast.success("Account Created Successfully");
+        reset();
+        navigate("/login");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -79,26 +96,24 @@ const Register = () => {
       );
       const uploadTask = uploadBytesResumable(storageRef, image);
       uploadTask.then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          await updateProfile(user, {
-            displayName: username,
-            photoURL: downloadURL,
-          });
-          // Add User To Firebase Database
-          const usersCol = collection(db, "users");
-          const userDoc = {
-            uid: user.uid,
-            displayName: username,
-            email,
-            photoURL: downloadURL,
-          };
-          const myDocRef = doc(usersCol, user.uid);
-          await setDoc(myDocRef, userDoc);
-        });
-        setLoading(false);
-        toast.success("Account Created Successfully");
-        reset();
-        navigate("/login");
+        getDownloadURL(storageRef)
+          .then(async (downloadURL) => {
+            await updateProfile(user, {
+              displayName: username,
+              photoURL: downloadURL,
+            });
+            // Add User To Firebase Database
+            const usersCol = collection(db, "users");
+            const userDoc = {
+              uid: user.uid,
+              displayName: username,
+              email,
+              photoURL: downloadURL,
+            };
+            const myDocRef = doc(usersCol, user.uid);
+            await setDoc(myDocRef, userDoc);
+          })
+          .then(() => logout());
       });
     } catch (error) {
       toast.error(error.message);
