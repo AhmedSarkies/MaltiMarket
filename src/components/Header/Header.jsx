@@ -93,7 +93,7 @@ const Header = () => {
                   <li className="nav-item" key={idx}>
                     <NavLink
                       to={path}
-                      className={({isActive}) =>
+                      className={({ isActive }) =>
                         isActive ? "nav-active" : ""
                       }
                     >
