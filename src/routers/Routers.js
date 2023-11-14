@@ -11,7 +11,13 @@ import {
   Checkout,
 } from "../pages";
 import ProtectedRoute from "./ProtectedRoute";
-import { AddProduct, AllProducts, Dashboard } from "../admin";
+import {
+  AddProduct,
+  AdminOrders,
+  AdminUsers,
+  AllProducts,
+  Dashboard,
+} from "../admin";
 
 const Routers = () => {
   return (
@@ -27,6 +33,8 @@ const Routers = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/all-products" element={<AllProducts />} />
         <Route path="/dashboard/add-product" element={<AddProduct />} />
+        <Route path="/dashboard/orders" element={<AdminOrders />} />
+        <Route path="/dashboard/users" element={<AdminUsers />} />
       </Route>
     </Routes>
   );
