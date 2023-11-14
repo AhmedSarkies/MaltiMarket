@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 
 import { Container, Row } from "reactstrap";
 
 import useAuth from "../hooks/useAuth";
 
 import "../styles/admin-nav.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const adminMenu = [
   {
@@ -37,6 +37,16 @@ const adminMenu = [
 
 const AdminNav = () => {
   const { currentUser } = useAuth();
+  const navRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/dashboard") {
+      document.querySelector(".item-1").classList.add("active");
+    } else {
+      document.querySelector(".item-1").classList.remove("active");
+    }
+  }, [location.pathname]);
 
   return (
     <Fragment>
@@ -70,12 +80,12 @@ const AdminNav = () => {
         <Container>
           <Row>
             <div className="admin-navigation">
-              <ul className="admin-menu-list">
+              <ul className="admin-menu-list" ref={navRef}>
                 {adminMenu.map((item, idx) => (
                   <li className="admin-menu-item" key={idx}>
                     <NavLink
                       className={({ isActive }) =>
-                        (isActive ? "active" : "") + " item"
+                        (isActive ? "active" : "") + ` item item-${idx + 1}`
                       }
                       to={item.path}
                     >
