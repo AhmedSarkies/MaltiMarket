@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import { Container, Row, Col, Form, FormGroup, Spinner } from "reactstrap";
@@ -16,8 +16,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+  const location = useLocation();
 
   const reset = () => {
     setEmail("");
@@ -32,7 +32,7 @@ const Login = () => {
       reset();
       setLoading(false);
       toast.success("Login successfully");
-      navigate("/checkout");
+      navigate("/");
     } catch (error) {
       setLoading(false);
       setPassword("");
@@ -42,7 +42,7 @@ const Login = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [loading]);
+  }, [loading, location]);
 
   return (
     <Helmet title={"Login"}>
