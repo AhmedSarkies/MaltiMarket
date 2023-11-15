@@ -16,12 +16,11 @@ import { Container, Row, Col } from "reactstrap";
 import { Helmet, CommonSection } from "../components";
 
 import "../styles/cart.css";
-import products from "../assets/data/products";
 
 const Cart = () => {
-  const { cart, totalAmount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { cart, totalAmount } = useSelector((state) => state.cart);
 
   return (
     <Helmet title={"Cart"}>
@@ -45,10 +44,14 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cart?.map((item) => {
-                      const { id, imgUrl, productName, price, quantity } = item;
-                      const { stock } = products.find(
-                        (product) => product.id === id
-                      );
+                      const {
+                        id,
+                        imgUrl,
+                        productName,
+                        price,
+                        quantity,
+                        stock,
+                      } = item;
                       return (
                         <tr key={id}>
                           <td>
