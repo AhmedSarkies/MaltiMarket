@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CommonSection, Helmet, ProductsList } from "../components";
 import { Col, Container, Row } from "reactstrap";
 
-import products from "../assets/data/products";
+import useGetData from "../hooks/useGetData";
 
 import "../styles/shop.css";
 
 const Shop = () => {
+  const { data: products } = useGetData("products");
   const [productsData, setProductsData] = useState(products);
+  console.log(productsData);
 
   const handleFilter = (e) => {
     const filteredValue = e.target.value;
@@ -30,6 +32,10 @@ const Shop = () => {
     setProductsData(searchedProducts);
   };
 
+  useEffect(() => {
+    setProductsData(products);
+  }, [products]);
+
   return (
     <Helmet title="Shop">
       <CommonSection title="Products" />
@@ -41,7 +47,6 @@ const Shop = () => {
                 <Col lg="4" md="6">
                   <div className="filter-widget">
                     <select onChange={handleFilter}>
-                      <option value="all">Filter By Category</option>
                       <option value="all">All</option>
                       <option value="sofa">Sofa</option>
                       <option value="mobile">Mobile</option>
