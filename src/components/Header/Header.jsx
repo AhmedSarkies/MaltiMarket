@@ -45,9 +45,9 @@ const Header = () => {
         document.body.scrollTop > 80 ||
         document.documentElement.scrollTop > 80
       ) {
-        headerRef.current.classList.add("sticky");
+        headerRef?.current?.classList.add("sticky");
       } else {
-        headerRef.current.classList.remove("sticky");
+        headerRef?.current?.classList.remove("sticky");
       }
     });
   };
@@ -131,14 +131,16 @@ const Header = () => {
                   }
                 >
                   {currentUser?.photoURL ? (
-                    <span className="logout" onClick={logout}>
-                      Logout
-                    </span>
+                    <div className="action d-flex justify-content-center align-items-center flex-column">
+                      <Link to="/dashboard">Dashboard</Link>
+                      <span className="logout" onClick={logout}>
+                        Logout
+                      </span>
+                    </div>
                   ) : (
                     <div className="action d-flex justify-content-center align-items-center flex-column">
                       <Link to="/login">Login</Link>
                       <Link to="/register">Register</Link>
-                      <Link to="/dashboard">Dashboard</Link>
                     </div>
                   )}
                 </div>
