@@ -3,35 +3,63 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
-import { Col, Container, Row } from "reactstrap";
+import { Col, Container, Row, Spinner } from "reactstrap";
 import { toast } from "react-toastify";
 
 import { CommonSection, Helmet, ProductsList } from "../components";
 
-import products from "../assets/data/products";
-
 import { addToCart } from "../redux/slices/cartSlice";
+
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../firebase.config";
+import useGetData from "../hooks/useGetData";
 
 import "../styles/product-details.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { data: products } = useGetData("products");
 
+  const [product, setProduct] = useState({});
   const [tab, setTab] = useState("description");
   const [rating, setRating] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [avgRating, setAvgRating] = useState(0);
+  const [reviewsData, setReviewsData] = useState([]);
+
   const reviewUser = useRef(null);
   const reviewMessage = useRef(null);
 
-  const product = products.find((product) => product.id === id);
+  const getProduct = async () => {
+    const docRef = doc(db, "products", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setProduct(docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  const getReviews = async () => {
+    getDocs(collection(db, `products/${id}/reviews`)).then((data) => {
+      setLoading(true);
+      const docs = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setReviewsData(docs);
+      const newAvgRating =
+        docs.map((doc) => doc.rating).reduce((acc, curr) => acc + curr, 0) /
+          docs.length || 0;
+      setAvgRating(newAvgRating);
+      setLoading(false);
+    });
+  };
+
   const {
     productName,
     price,
     description,
     imgUrl,
-    avgRating,
-    reviews,
     shortDesc,
     category,
     stock,
@@ -55,27 +83,48 @@ const ProductDetails = () => {
     toast.success("Product Added Successfully");
   };
 
-  const submitHandler = (e) => {
+  const reset = () => {
+    toast.success("Review Submitted Successfully");
+    reviewUser.current.value = "";
+    reviewMessage.current.value = "";
+    setRating(0);
+    setLoading(false);
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (!rating) {
       toast.error("Please give a rating");
       return;
     }
     const review = {
+      productId: id,
       username: reviewUser.current.value,
       rating: rating,
       text: reviewMessage.current.value,
     };
-    toast.success("Review Submitted Successfully");
-    console.log(review);
-    reviewUser.current.value = "";
-    reviewMessage.current.value = "";
-    setRating(0);
+    // Add review to Firebase
+    try {
+      setLoading(true);
+      const docRef = collection(db, `products/${id}/reviews`);
+      await addDoc(docRef, review).then(() => {
+        reset();
+        getReviews();
+      });
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [product]);
+
+  useEffect(() => {
+    getProduct();
+    getReviews();
+  }, [id]);
 
   return (
     <Helmet>
@@ -96,7 +145,7 @@ const ProductDetails = () => {
                         <i
                           key={idx}
                           className={`${
-                            idx + 1 <= avgRating
+                            idx + 1 <= avgRating.toFixed(1)
                               ? "ri-star-s-fill"
                               : "ri-star-line"
                           }`}
@@ -105,7 +154,7 @@ const ProductDetails = () => {
                     </span>
                   </div>
                   <p>
-                    (<span>{avgRating}</span> ratings)
+                    (<span>{avgRating.toFixed(1)}</span> ratings)
                   </p>
                 </div>
                 <div className="d-flex align-items-center gap-5">
@@ -166,7 +215,12 @@ const ProductDetails = () => {
                   className={`${tab === "review" && "active-tab"}`}
                   onClick={() => setTab("review")}
                 >
-                  Review ({reviews.length})
+                  Review (
+                  {
+                    reviewsData?.filter((review) => review.productId === id)
+                      .length
+                  }
+                  )
                 </h6>
               </div>
               {tab === "description" && (
@@ -178,13 +232,19 @@ const ProductDetails = () => {
                 <div className="product-review mt-5">
                   <div className="review-wrapper">
                     <ul>
-                      {reviews?.map((review, idx) => (
-                        <li key={idx} className="mb-4">
-                          <h6>{review.username}</h6>
-                          <span>{review.rating} (rating)</span>
-                          <p>{review.text}</p>
-                        </li>
-                      ))}
+                      {loading ? (
+                        <div className="text-center">
+                          <Spinner className="spinner" />
+                        </div>
+                      ) : (
+                        reviewsData?.map(({ id, username, rating, text }) => (
+                          <li key={id} className="mb-4">
+                            <h6>{username}</h6>
+                            <span>{rating} (rating)</span>
+                            <p>{text}</p>
+                          </li>
+                        ))
+                      )}
                     </ul>
                     <div className="review-form">
                       <h4>Leave Your Experience</h4>
@@ -234,8 +294,15 @@ const ProductDetails = () => {
                             whileTap={{ scale: 1.2 }}
                             className="shop-btn"
                             type="submit"
+                            disabled={loading}
+                            style={{
+                              opacity: loading ? 0.7 : 1,
+                              disabled: loading,
+                              cursor: loading ? "not-allowed" : "pointer",
+                              pointerEvents: loading ? "none" : "auto",
+                            }}
                           >
-                            Submit
+                            {loading ? "Submitting..." : "Submit"}
                           </motion.button>
                         </div>
                       </form>
