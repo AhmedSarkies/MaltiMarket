@@ -11,13 +11,7 @@ import {
   Checkout,
 } from "../pages";
 import ProtectedRoute from "./ProtectedRoute";
-import {
-  AddProduct,
-  AdminOrders,
-  AdminUsers,
-  AllProducts,
-  Dashboard,
-} from "../admin";
+import { AddProduct, Orders, Users, AllProducts, Dashboard } from "../admin";
 
 const Routers = () => {
   return (
@@ -28,14 +22,15 @@ const Routers = () => {
       <Route path="/shop" element={<Shop />} />
       <Route path="/shop/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/" element={<ProtectedRoute />}>
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/all-products" element={<AllProducts />} />
-        <Route path="/dashboard/add-product" element={<AddProduct />} />
-        <Route path="/dashboard/orders" element={<AdminOrders />} />
-        <Route path="/dashboard/users" element={<AdminUsers />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard/all-products" element={<AllProducts />} />
+        <Route path="dashboard/add-product" element={<AddProduct />} />
+        <Route path="dashboard/orders" element={<Orders />} />
+        <Route path="dashboard/users" element={<Users />} />
       </Route>
+      <Route path="*" element={<h1>Not Found</h1>} />
     </Routes>
   );
 };
