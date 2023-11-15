@@ -10,7 +10,6 @@ import "../styles/shop.css";
 const Shop = () => {
   const { data: products } = useGetData("products");
   const [productsData, setProductsData] = useState(products);
-  console.log(productsData);
 
   const handleFilter = (e) => {
     const filteredValue = e.target.value;
