@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { Container, Row, Col, Form, FormGroup, Spinner } from "reactstrap";
 
-import { db, storage } from "../firebase.config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
+import { db, storage } from "../firebase.config";
 
 import "../styles/add-product.css";
 
@@ -19,6 +21,7 @@ const AddProduct = () => {
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleCreateBase64 = useCallback(async (e) => {
     const file = e.target.files[0];
@@ -59,6 +62,9 @@ const AddProduct = () => {
     setImage("");
     setImagePreview("");
     document.getElementById("category").value = "DEFAULT";
+    setLoading(false);
+    toast.success("Product Added Successfully");
+    navigate("/dashboard/all-products");
   };
 
   const handleSubmit = async (e) => {
@@ -80,18 +86,15 @@ const AddProduct = () => {
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          const docRef = collection(db, "products");
-
-          await addDoc(docRef, {
-            ...product,
-            imgUrl: downloadURL,
-          });
-        });
-
-        setLoading(false);
-        toast.success("Product Added Successfully");
-        reset();
+        getDownloadURL(storageRef)
+          .then(async (downloadURL) => {
+            const docRef = collection(db, "products");
+            await addDoc(docRef, {
+              ...product,
+              imgUrl: downloadURL,
+            });
+          })
+          .then(() => reset());
       });
     } catch (error) {
       toast.error(error.message);
@@ -241,9 +244,19 @@ const AddProduct = () => {
                   </div>
                 )}
               </FormGroup>
-              <button type="submit" className="shop-btn" disabled={loading}>
+              <motion.button
+                whileTap={{ scale: 1.08 }}
+                type="submit"
+                className="shop-btn d-block"
+                style={{
+                  opacity: loading ? 0.7 : 1,
+                  disabled: loading,
+                  cursor: loading ? "not-allowed" : "pointer",
+                  pointerEvents: loading ? "none" : "visible",
+                }}
+              >
                 {loading ? <Spinner size="sm" color="light" /> : "Add Product"}
-              </button>
+              </motion.button>
             </Form>
           </Col>
         </Row>
