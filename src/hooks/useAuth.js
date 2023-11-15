@@ -12,10 +12,10 @@ const useAuth = () => {
       if (user) {
         setCurrentUser(user);
       } else {
-        setCurrentUser({});
+        setCurrentUser(null);
       }
     });
-  }, []);
+  }, [currentUser]);
 
   return { currentUser };
 };
