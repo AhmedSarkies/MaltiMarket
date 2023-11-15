@@ -31,6 +31,7 @@ const cartSlice = createSlice({
         existingItem.quantity += newItem.quantity;
       }
       totalAmountHandler(state);
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     // Delete From Cart Reducer
     deleteFromCart: (state, action) => {
@@ -43,6 +44,7 @@ const cartSlice = createSlice({
         existingItem.quantity--;
       }
       totalAmountHandler(state);
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     // Delete Item From Cart Reducer
     deleteItemFromCart: (state, action) => {
@@ -53,12 +55,14 @@ const cartSlice = createSlice({
         0
       );
       state.totalQuantity--;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     // Delete Cart Reducer
     deleteCart: (state) => {
       state.cart = [];
       state.totalQuantity = 0;
       state.totalAmount = 0;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
