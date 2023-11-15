@@ -117,7 +117,7 @@ const ProductDetails = () => {
         console.log("No such document!");
       }
     };
-  
+
     const getReviews = async () => {
       getDocs(collection(db, `products/${id}/reviews`)).then((data) => {
         setLoading(true);
