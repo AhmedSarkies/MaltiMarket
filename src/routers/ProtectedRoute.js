@@ -6,7 +6,6 @@ import useAuth from "../hooks/useAuth";
 const ProtectedRoute = () => {
   const location = useLocation();
   const { currentUser: isAuth } = useAuth();
-  console.log(!!isAuth);
 
   return !!isAuth ? (
     <Outlet />
