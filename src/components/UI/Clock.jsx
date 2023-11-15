@@ -10,7 +10,7 @@ const Clock = () => {
 
   const call = useCallback(() => {
     const countDown = () => {
-      const destination = new Date("Feb 8, 2024").getTime();
+      const destination = new Date("Feb 13, 2024").getTime();
       const interval = setInterval(() => {
         const now = new Date().getTime();
         const difference = destination - now;
