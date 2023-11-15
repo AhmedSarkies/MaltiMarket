@@ -32,29 +32,6 @@ const ProductDetails = () => {
   const reviewUser = useRef(null);
   const reviewMessage = useRef(null);
 
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setProduct(docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-  };
-
-  const getReviews = async () => {
-    getDocs(collection(db, `products/${id}/reviews`)).then((data) => {
-      setLoading(true);
-      const docs = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setReviewsData(docs);
-      const newAvgRating =
-        docs.map((doc) => doc.rating).reduce((acc, curr) => acc + curr, 0) /
-          docs.length || 0;
-      setAvgRating(newAvgRating);
-      setLoading(false);
-    });
-  };
-
   const {
     productName,
     price,
@@ -107,9 +84,18 @@ const ProductDetails = () => {
     try {
       setLoading(true);
       const docRef = collection(db, `products/${id}/reviews`);
-      await addDoc(docRef, review).then(() => {
+      await addDoc(docRef, review).then(async () => {
         reset();
-        getReviews();
+        getDocs(collection(db, `products/${id}/reviews`)).then((data) => {
+          setLoading(true);
+          const docs = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          setReviewsData(docs);
+          const newAvgRating =
+            docs.map((doc) => doc.rating).reduce((acc, curr) => acc + curr, 0) /
+              docs.length || 0;
+          setAvgRating(newAvgRating);
+          setLoading(false);
+        });
       });
     } catch (error) {
       toast.error(error.message);
@@ -122,6 +108,28 @@ const ProductDetails = () => {
   }, [product]);
 
   useEffect(() => {
+    const getProduct = async () => {
+      const docRef = doc(db, "products", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setProduct(docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    };
+  
+    const getReviews = async () => {
+      getDocs(collection(db, `products/${id}/reviews`)).then((data) => {
+        setLoading(true);
+        const docs = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        setReviewsData(docs);
+        const newAvgRating =
+          docs.map((doc) => doc.rating).reduce((acc, curr) => acc + curr, 0) /
+            docs.length || 0;
+        setAvgRating(newAvgRating);
+        setLoading(false);
+      });
+    };
     getProduct();
     getReviews();
   }, [id]);
