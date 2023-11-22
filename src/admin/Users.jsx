@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { db } from "../firebase.config";
 import { deleteDoc, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import useGetData from "../hooks/useGetData";
 
 const Users = () => {
@@ -26,13 +27,21 @@ const Users = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           setLoading(true);
-          await deleteDoc(doc(db, "users", id))
+          getAuth()
+            .currentUser.delete()
             .then(() => {
-              const newData = data.filter((user) => user.id !== id);
-              setData(newData);
-              toast.success(`${displayName} deleted successfully`);
+              deleteDoc(doc(db, "users", id))
+                .then(() => {
+                  const newData = data.filter((user) => user.id !== id);
+                  setData(newData);
+                  toast.success(`${displayName} deleted successfully`);
+                })
+                .then(() => {
+                  setLoading(false);
+                });
             })
-            .then(() => {
+            .catch((error) => {
+              toast.error(error.message);
               setLoading(false);
             });
         }
