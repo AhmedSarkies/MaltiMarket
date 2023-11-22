@@ -10,7 +10,7 @@ import "../styles/all-products.css";
 
 import useGetData from "../hooks/useGetData";
 import { db } from "../firebase.config";
-import { deleteDoc, doc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const AllProducts = () => {
@@ -29,20 +29,27 @@ const AllProducts = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           setLoading(true);
-          await deleteDoc(doc(db, "products", id))
-            .then(() => {
-              const newData = data.filter((product) => product.id !== id);
-              setData(newData);
-              toast.success(`${productName} deleted successfully`);
+          // delete reviews collection of the product
+          await getDocs(collection(db, `products/${id}/reviews`))
+            .then((data) => {
+              data.docs.map(async (item) => {
+                await deleteDoc(doc(db, `products/${id}/reviews/${item.id}`));
+              });
             })
-            .then(() => {
-              setLoading(false);
+            .then(async () => {
+              // delete product
+              await deleteDoc(doc(db, `products/${id}`)).then(() => {
+                const newData = data.filter((product) => product.id !== id);
+                setData(newData);
+                setLoading(false);
+                toast.success(`${productName} deleted successfully`);
+              });
             });
         }
       });
     } catch (error) {
-      toast.error(error.message);
       setLoading(false);
+      toast.error(error.message);
     }
   };
 
