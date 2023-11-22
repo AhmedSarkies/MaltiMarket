@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 
 import { motion } from "framer-motion";
 
@@ -14,13 +14,15 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const Orders = () => {
-  // First way to delete a product
+  const [showSubRow, setShowSubRow] = useState(false);
+
   const { data, setData, loading, setLoading } = useGetData("orders");
-  const handleDeleteProduct = async ({ id, productName }) => {
+
+  const handleDeleteProduct = async (id) => {
     try {
       Swal.fire({
         title: "Are you sure?",
-        text: `You won't be able to revert ${productName}!`,
+        text: `You won't be able to revert!`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -29,11 +31,11 @@ const Orders = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           setLoading(true);
-          await deleteDoc(doc(db, "products", id))
+          await deleteDoc(doc(db, `orders/${id}`))
             .then(() => {
               const newData = data.filter((product) => product.id !== id);
               setData(newData);
-              toast.success(`${productName} deleted successfully`);
+              toast.success(`deleted successfully`);
             })
             .then(() => {
               setLoading(false);
@@ -59,49 +61,92 @@ const Orders = () => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Image</th>
-                    <th>Product Title</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Stock</th>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>User Email</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                {data && (
-                  <tbody>
-                    {data?.length > 0 &&
-                      data.map((product) => {
-                        const {
-                          id,
-                          imgUrl,
-                          productName,
-                          category,
-                          price,
-                          stock,
-                        } = product;
-                        return (
-                          <tr key={id}>
-                            <td>
-                              <img src={imgUrl} alt={productName} />
-                            </td>
-                            <td>{productName}</td>
-                            <td>{category}</td>
-                            <td>${price}</td>
-                            <td>{stock}</td>
+                <tbody>
+                  {data.map(
+                    ({ id, userId, userName, userEmail, products }, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <tr
+                            key={id + index}
+                            className="orders-main-row"
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "#f5f5f5",
+                            }}
+                            onClick={() => setShowSubRow(!showSubRow)}
+                          >
+                            <td>{userId}</td>
+                            <td>{userName}</td>
+                            <td>{userEmail}</td>
                             <td>
                               <motion.button
                                 whileTap={{ scale: 1.08 }}
                                 className="btn btn-sm btn-danger"
-                                onClick={() => handleDeleteProduct(product)}
+                                onClick={() => handleDeleteProduct(id)}
                               >
                                 Delete
                               </motion.button>
                             </td>
                           </tr>
-                        );
-                      })}
-                  </tbody>
-                )}
+                          {showSubRow ? (
+                            <tr key={id + index + userId}>
+                              <td colSpan="4" className={`orders-sub-row`}>
+                                <table className="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Product Image</th>
+                                      <th>Product ID</th>
+                                      <th>Product Name</th>
+                                      <th>Price</th>
+                                      <th>Qty</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {products.map(
+                                      (
+                                        {
+                                          id: productId,
+                                          productName,
+                                          price,
+                                          quantity,
+                                          imgUrl,
+                                        },
+                                        idx
+                                      ) => {
+                                        return (
+                                          <tr key={productId + id + idx}>
+                                            <td>
+                                              <img
+                                                src={imgUrl}
+                                                alt={productName}
+                                                width="50"
+                                                height="50"
+                                              />
+                                            </td>
+                                            <td>{productId}</td>
+                                            <td>{productName}</td>
+                                            <td>{price}</td>
+                                            <td>{quantity}</td>
+                                          </tr>
+                                        );
+                                      }
+                                    )}
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          ) : null}
+                        </Fragment>
+                      );
+                    }
+                  )}
+                </tbody>
               </table>
             )}
             {!loading && data?.length === 0 && (
