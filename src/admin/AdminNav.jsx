@@ -5,7 +5,11 @@ import { Container, Row } from "reactstrap";
 import useAuth from "../hooks/useAuth";
 
 import "../styles/admin-nav.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase.config";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const adminMenu = [
   {
@@ -39,6 +43,19 @@ const AdminNav = () => {
   const { currentUser } = useAuth();
   const navRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const activeActionsRef = useRef(null);
+
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged out successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -54,7 +71,7 @@ const AdminNav = () => {
         <div className="admin-nav-top">
           <Container>
             <div className="admin-nav-wrapper-top">
-              <div className="logo">
+              <div className="logo" onClick={() => navigate("/")}>
                 <h2>MaltiMarket</h2>
               </div>
               <div className="search-box">
@@ -70,10 +87,30 @@ const AdminNav = () => {
                 <span>
                   <i className="ri-settings-2-line"></i>
                 </span>
-                <img
-                  src={currentUser?.photoURL}
-                  alt={currentUser?.displayName}
-                />
+                <div className="profile">
+                  <motion.img
+                    whileTap={{ scale: 1.2 }}
+                    src={currentUser?.photoURL}
+                    alt={currentUser?.displayName}
+                    onClick={() =>
+                      activeActionsRef.current.classList.toggle("active")
+                    }
+                  />
+                  <div
+                    className="profile-actions"
+                    ref={activeActionsRef}
+                    onClick={() =>
+                      activeActionsRef.current.classList.toggle("active")
+                    }
+                  >
+                    <div className="action d-flex justify-content-center align-items-center flex-column">
+                      <Link to="/">Home</Link>
+                      <span className="logout" onClick={logout}>
+                        Logout
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </Container>
