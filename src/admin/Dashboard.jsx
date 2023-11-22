@@ -20,7 +20,9 @@ const Dashboard = () => {
               <div className="revenue-box">
                 <h5>Total Sales</h5>
                 <span>
-                  ${products?.reduce((acc, curr) => acc + curr.price, 0) || 0}
+                  $
+                  {orders?.reduce((acc, curr) => acc + curr.totalAmount, 0) ||
+                    0}
                 </span>
               </div>
             </Col>
@@ -28,7 +30,8 @@ const Dashboard = () => {
               <div className="orders-box">
                 <h5>Order</h5>
                 <span>
-                  {orders?.reduce((acc, curr) => acc + curr.quantity, 0) || 0}
+                  {orders?.reduce((acc, curr) => acc + curr.totalQuantity, 0) ||
+                    0}
                 </span>
               </div>
             </Col>
